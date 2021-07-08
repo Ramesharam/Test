@@ -60,7 +60,7 @@ public class RT_CaseTriggerHandler_Test {
             new Case(Status = 'New', Origin='Email',
                      RecordTypeId =recordTypeId.Id, ZD_Source__c = 'Web Service')};
        INSERT newCaseList;
-       
+       system.debug('test');
     }
     @isTest static void testMethod1(){
         Case resultCase =[SELECT Resolved_by__c FROM Case WHERE Origin ='Email' LIMIT 1];
