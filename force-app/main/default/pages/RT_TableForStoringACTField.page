@@ -1,0 +1,43 @@
+<apex:page docType="html-5.0" Controller="RT_TableForStoringACTField">
+    <apex:form >
+        <apex:pageBlock title="Account Details" id="pagetable">
+            <apex:pageblockButtons Location="Bottom" id="myButtons">
+                <apex:commandButton value="First" action="{!First}" disabled="{!disabledPrevious}" reRender="myButtons,pagetable"/>
+                <apex:commandButton value="Previous" action="{!Previous}" disabled="{!disabledPrevious}" reRender="myButtons,pagetable"/>
+                <apex:commandButton value="Next" action="{!Next}" disabled="{!disabledNext}" reRender="myButtons,pagetable"/>
+                <apex:commandButton value="Last" action="{!End}" disabled="{!disabledNext}" reRender="myButtons,pagetable"/>
+            </apex:pageblockButtons>
+            <apex:pageBlockSection columns="1" id="section">
+                <apex:variable var="rowNumber" value="{!counter}"/>
+                <apex:pageBlockTable id="table" var="actObjectToStoreData" value="{!wrapAccountList}">
+                    <apex:column headerValue="SL.No">
+                        <apex:variable var="rowNumber" value="{!rowNumber+1}"/>{!rowNumber}
+                    </apex:column>
+                    <apex:column headerValue="Action">
+                       <apex:outputPanel rendered="{!actObjectToStoreData.selected}" id="EditDelete">
+                            <apex:commandButton value="Delete" action="{!Deleterow}"  rerender="pagetable" >
+                               <apex:param name="index" value="{!rowNumber}" /></apex:commandButton>
+                            <apex:commandButton value="Edit" action="{!Editrow}"   rerender="pagetable"  rendered="{!actObjectToStoreData.selected}">
+                                <apex:param assignTo="{!editId}" name="edit" value="{!actObjectToStoreData.acc.id}"/></apex:commandButton>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!(!actObjectToStoreData.selected)}">
+                            <apex:commandButton value="Save" action="{!Save}"  rerender="pagetable">
+                                <apex:param assignTo="{!saveId}" name="save" value="{!actObjectToStoreData.acc.id}" /></apex:commandButton>
+                            <apex:commandButton value="Cancel" action="{!Cancel}"  rerender="pagetable" >
+                                <apex:param assignTo="{!cancelId}" name="cancel" value="{!actObjectToStoreData.acc.id}" /></apex:commandButton>
+                        </apex:outputPanel>
+                    </apex:column>
+                    <apex:column headerValue="Account"><apex:outputText value="{!actObjectToStoreData.acc.Name}" rendered="{!actObjectToStoreData.selected}"/>
+                        <apex:inputText value="{!actObjectToStoreData.acc.Name}" rendered="{!(!actObjectToStoreData.selected)}"/> </apex:column>
+                    <apex:column headerValue="Account Number"><apex:outputText value="{!actObjectToStoreData.acc.AccountNumber}" rendered="{!actObjectToStoreData.selected}"/>
+                        <apex:inputText value="{!actObjectToStoreData.acc.AccountNumber}" rendered="{!(!actObjectToStoreData.selected)}"/> </apex:column>
+                    <apex:column headerValue="Industry"><apex:outputText value="{!actObjectToStoreData.acc.Industry}" rendered="{!actObjectToStoreData.selected}"/>
+                        <apex:inputText value="{!actObjectToStoreData.acc.Industry}" rendered="{!(!actObjectToStoreData.selected)}"/></apex:column>
+                    <apex:column headerValue="Phone"><apex:outputText value="{!actObjectToStoreData.acc.Phone}" rendered="{!actObjectToStoreData.selected}"/>
+                        <apex:inputText value="{!actObjectToStoreData.acc.Phone}" rendered="{!(!actObjectToStoreData.selected)}"/></apex:column>
+                    <apex:facet name="footer"> Showing Pages {!pageNumber} of {!totalpages}</apex:facet>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

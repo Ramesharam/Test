@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name='fieldValues' label='Fields To Fetch'/>
+    <design:attribute name='sObjectName' label='Object Name'/>
+</design:component>

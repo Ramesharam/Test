@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name='record' type='List'/>
+    <aura:attribute name="fields" type="List"/>
+    <aura:attribute name='sObjectName' type='String'/>
+    <aura:attribute name='actName' type='String'/>
+    <aura:attribute name="valueField" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    
+    <li class="slds-page-header__detail-block">
+        <div class="slds-text-title slds-truncate" title="Field 1">{!v.fields}</div>
+        <div class="slds-truncate">{!v.valueField}</div>
+    </li>
+    
+    
+    
+</aura:component>

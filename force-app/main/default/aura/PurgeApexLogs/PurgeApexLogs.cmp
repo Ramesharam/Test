@@ -1,0 +1,50 @@
+<aura:component controller='PurgeApexLogsController'
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+
+    <aura:attribute name="apexLogsMsg" type="Object" />
+    <aura:attribute name="jobId" type="String" />
+    <aura:attribute name="progress" type="Integer" />
+    <aura:attribute name="isHideDelete" type="Boolean" default="true" />
+    <aura:attribute name="isHideAbort" type="Boolean" default="true" />
+    <aura:attribute name="showProgressBar" type="Boolean" default="false" />
+    <aura:attribute name="isRefreshed" type="Boolean" default="true" />
+    <aura:attribute name="status" type="String" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+    <div class=" slds-page-header" align="center" style="line-height: 1px; border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;">Purge ApexLogs</div>
+    <div style="background: white; ">
+        <aura:if isTrue="{!v.isHideDelete}">
+            <div class="slds-grid ">
+                <div class="slds-col" style="margin: 7px">
+                    <lightning:button label="DeleteLogs" title="DeleteLogs" onclick="{! c.delete }" />
+                </div>
+                <div class="slds-m-left_x-small" style="line-height: 24px">
+                    <p> Click on Delete Logs button all the apex logs are deleted</p>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isRefreshed}">
+                <aura:if isTrue="{!v.showProgressBar}">
+                    <lightning:progressBar value="{! v.progress }" />
+                    {!v.apexLogsMsg}
+                </aura:if>
+            </aura:if>
+            <aura:set attribute="else">
+
+                <aura:if isTrue="{!v.isHideAbort}">
+                    <div class="slds-grid ">
+                        <div class="slds-col" style="margin: 7px">
+                            <lightning:button label="Abort" title="Abort" onclick="{! c.abort }" />
+                        </div>
+                        <div class="slds-m-left_x-small" style="line-height: 24px">
+                            <p style="padding-top: 5%; padding-right: 5%">Click on Abort button to Abort the Process</p>
+                        </div>
+                    </div>
+                </aura:if>
+                <lightning:progressBar value="{! v.progress }" />
+                {!v.apexLogsMsg}
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

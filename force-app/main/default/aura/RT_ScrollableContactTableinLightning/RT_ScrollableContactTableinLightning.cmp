@@ -1,0 +1,39 @@
+<aura:component controller = "aaa" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="contactRecords" type="List"/>
+    <aura:attribute name="actdata" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <div class="slds-section slds-is-open">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Contacts</span>
+        </h3>
+    </div>
+    
+    <div class="slds-table--header-fixed_container" style="height:450px;">
+        <div class="slds-scrollable_y" style="height:100%;">
+            <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--header-fixed">
+                
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th scope="col"><div class="slds-truncate slds-cell-fixed" title="slno">Sl.No</div></th>
+                        <th scope="col"><div class="slds-truncate slds-cell-fixed" title="First Name"> First Name          </div></th>
+                        <th scope="col"><div class="slds-truncate slds-cell-fixed" title="Last Name">Last Name</div></th>
+                        <th scope="col"><div class="slds-truncate slds-cell-fixed" title="Phone">Phone</div></th>
+                        <th scope="col"><div class="slds-truncate slds-cell-fixed" title="E-mail">E-mail</div></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index">
+                        <tr>
+                            <td>Contact {!index + 1} </td>
+                            <td>{!row.FirstName}</td> 
+                            <td>{!row.LastName}</td> 
+                            <td>{!row.Phone}</td>
+                            <td>{!row.Email}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</aura:component>

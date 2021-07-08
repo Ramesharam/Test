@@ -1,0 +1,23 @@
+<apex:page controller="RT_Dynamic" showHeader="false" sidebar="false" docType="html-5.0">
+    <apex:form >
+    	
+       
+            <table>
+                <tr>
+                <th> First Name </th>
+                <th> Last Name </th>
+                <th> Email </th>
+                <th> Phone </th>
+                </tr>
+             <apex:repeat id="In"  value="{!contacts}" var="a"> 
+        	<tr>
+                <td>{!a.Firstname}</td>
+                <td>{!a.lastname}</td>
+                <td>{!a.email}</td>
+                <td>{!a.phone}</td>
+            </tr>
+              </apex:repeat>   
+            </table>
+       
+    </apex:form>
+</apex:page>

@@ -1,0 +1,15 @@
+<apex:page docType="html-5.0" Controller="RT_classForCustomButton" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="save"/></apex:pageBlockButtons>
+            <apex:pageBlockSection >
+            <apex:pageBlockTable value="{!customList}" var="a">
+                <apex:column headerValue="Account"><p style = 'colour:red' > <apex:outputText value="{!a.acc.Name}" /></p></apex:column>
+                    <apex:column headerValue="First Name"> <apex:outputText value="{!a.con.firstname}"/></apex:column>
+                    <apex:column headerValue="Last Name"><apex:outputText value="{!a.con.lastname}"/></apex:column> 
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

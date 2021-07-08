@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global"
+                controller="Downloadattachment">
+	<aura:attribute name="recordId" type="String" description="Record to which the files should be attached" />
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.pdf']"/>
+    <aura:attribute name="multiple" type="Boolean" default="true"/>
+    <aura:attribute name="docId" type="String"/>
+	<div>
+    <lightning:fileUpload  name="fileUploader"
+                           label= "Demo Upload"
+                           multiple="true"
+                           accept="{!v.accept}"
+                           recordId="{!v.recordId}"
+                           onuploadfinished="{! c.handleUploadFinished }"/>
+     
+    </div>
+    <div>
+        <a href="" data-id="{!v.docId}"  onclick = "{!c.downloadfile}" >Download</a>
+    </div>
+
+</aura:component>

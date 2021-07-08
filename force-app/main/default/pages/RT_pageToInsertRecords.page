@@ -1,0 +1,14 @@
+<apex:page controller="InsertController" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:actionFunction action="{!insertData}" reRender="In1,In2" name="insertData"/> 
+        First Name:<apex:inputText id="In1" label="First Name" value="{!firstname}"/>
+        Last Name:<apex:inputText id="In2" label="Last Name" value="{!lastname}"/>
+        <input type="button" value="save" onclick="insertData()" />
+        
+            
+        
+    </apex:form>
+    
+
+    
+</apex:page>

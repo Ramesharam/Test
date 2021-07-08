@@ -1,0 +1,33 @@
+<aura:component controller ="RT_LeadSortController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!-- Attribute -->
+    <aura:attribute name="leads" type="Object[]" />
+    <aura:attribute name="picklist" type="List"/>
+    
+    <!-- handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:iteration items = "{!v.leads}" var="lead">
+        <div class="slds-grid slds-gutters slds-box">
+            <div class ="slds-col">
+                <span class="slds-avatar slds-avatar--circle">
+                    <img alt="person name" />
+                </span>
+                
+            </div>
+            <div class="slds-col">
+                <div>{!lead.Id}</div>
+                <div>Name:{!lead.Name}</div>
+                <div>Phone:{!lead.Phone}</div>
+                <div>Email:{!lead.Email}</div>
+            </div>
+            <div class="slds-col">Priority 
+                <div><lightning:select aura:id ="pick" value="{!lead.Priority__c}" onchange="{!c.sortRecords}">
+                    <aura:iteration items="{!v.picklist}" var="opt">
+                        <option value="{!opt}" selected ="{!lead.Priority__c == !opt}">{!opt}</option>
+                    </aura:iteration>
+                    </lightning:select></div></div>
+        </div>
+        
+    </aura:iteration>
+</aura:component>

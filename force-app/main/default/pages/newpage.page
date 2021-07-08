@@ -1,0 +1,31 @@
+<apex:page docType="html-5.0" Controller="AccountSelectClassController">
+    <apex:form >
+        <script> function edit() {
+        document.getElementById('ed1').hidden = True;
+        document.getElementById('save').hidden = false;
+        }
+        </script>
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:outputPanel >
+                    <table border= '2'><tr><th>S.No</th><th>Action</th><th>Account</th><th>Account Number</th><th>Industry</th></tr>
+                        <apex:pageBlockTable id="table" var="a" value="{!wrapAccountList}">
+                            <tr> 
+                                <td>1</td>
+                                <apex:column ><apex:outputPanel rendered="{!a.selected}" id="edit"><apex:commandButton id="ed1" action="{!edit}"  rendered="{!a.selected}" value="Edit " > 
+                                    <apex:param assignTo="{!editId}" name="edit" value="{!a.acc.id}"/></apex:commandButton>>
+                                    {!a.acc.id}----{!editId}
+                                    <button >Delete</button> </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!(!a.selected)}"  ><button onclick ="save()" id ='save' type="button" rendered ='{!a.selected}' hidden='true' >Save</button>
+                                        <button>Cancel</button></apex:outputPanel></apex:column>
+                                <td>{!a.acc.Name}</td>
+                                <td>{!a.acc.Website}</td>
+                                <td>{!a.acc.Phone}</td>
+                            </tr>
+                        </apex:pageBlockTable>             </table>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+    </apex:form>   
+</apex:page>

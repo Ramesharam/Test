@@ -1,0 +1,63 @@
+<aura:component controller = "aaa" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="contactRecords" type="List"/>
+    <aura:attribute name="actdata" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <div class="slds-section slds-is-open">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Contacts</span>
+        </h3>
+    </div>
+            <table class="slds-table slds-table--bordered  slds-table--striped slds-table--cell-buffer">
+    <div class="slds-grid slds-gutters">
+            <div>
+                <thead>
+                    <tr >
+                        <td scope="col"><div class="slds-truncate" title="slno">Sl.No</div></td>
+                    </tr>
+                        <tr >
+                        <td scope="col"><div class="slds-truncate" title="First Name"> First Name </div></td>
+                    </tr>
+                    <tr >
+                            <td scope="col"><div class="slds-truncate" title="Last Name">Last Name</div></td>
+                    </tr>
+                    <tr >
+                        <td scope="col"><div class="slds-truncate" title="Phone">Phone</div></td>
+                    </tr>
+                    <tr >
+                        <td scope="col"><div class="slds-truncate" title="E-mail">E-mail</div></td>
+                    </tr>
+                </thead>
+            </div>
+            <div class="slds-scrollable_x" style="height: 10rem; width: 50rem;">
+                <tbody>
+                    <tr>
+                        <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index">
+                            <td>Contact {!index + 1} </td>
+                        </aura:iteration>
+                    </tr>
+                    <tr>
+                        <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index"> 
+                            <td>{!row.FirstName}</td>
+                        </aura:iteration>
+                    </tr>
+                    <tr>
+                        <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index">  
+                            <td>{!row.LastName}</td> 
+                        </aura:iteration>
+                    </tr>
+                    <tr>
+                        <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index">
+                            <td>{!row.Phone}</td>
+                        </aura:iteration>
+                    </tr>
+                    <tr>
+                        <aura:iteration items="{!v.contactRecords}" var="row" indexVar="index">
+                            <td>{!row.Email}</td>
+                        </aura:iteration>
+                    </tr>          
+                </tbody>
+            </div>
+       </div> 
+    </table>
+       
+</aura:component>

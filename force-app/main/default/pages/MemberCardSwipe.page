@@ -1,0 +1,13 @@
+<apex:page controller="MemberCardSwipeController">
+    
+    <apex:form >
+        
+        <apex:inputText value="{!cardScanString}" label="Card Scan Input" />
+        
+        <apex:commandlink action="{!searchVf}" target="_top" id="theCommandLink">
+            <apex:commandButton value="Search"/>
+        </apex:commandLink>
+        
+    </apex:form>
+    
+</apex:page>

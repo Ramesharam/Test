@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable" Controller="RT_TableforAccountscls" >
+	 <aura:attribute name="Acc" type="Account[]"/>
+        <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+      
+            <table class="slds-table slds-table--bordered slds-table--striped" >
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="slds-truncate">Sl.No</span></th>
+                        <th scope="col"><span class="slds-truncate">Account Name</span></th>
+                        <th scope="col"><span class="slds-truncate">Account Number</span></th>
+                        <th scope="col"><span class="slds-truncate">Industry</span></th>
+                        <th scope="col"><span class="slds-truncate">Phone</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.Acc}" var="acct">
+                        <tr>  
+                            <td>1</td>
+                            <td>{!acct.Name}</td> 
+                            <td>{!acct.AccountNumber}</td> 
+                            <td>{!acct.Industry}</td>
+                            <td>{!acct.Phone}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+</aura:component>

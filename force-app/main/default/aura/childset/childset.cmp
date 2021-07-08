@@ -1,0 +1,30 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="LightningDataTableController">
+    <aura:attribute name="fieldSetName" type="String" description="The api name of the field set to use from the given object." />
+	<aura:attribute name="ObjectName" type="String" description="object name." />
+    <aura:attribute name="mydata" type="sObject[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+	 <aura:attribute name="recordId" type="String" /> 
+    <aura:attribute name="isEdit" type="boolean" default="False"/>
+    <aura:attribute name="save" type="boolean" default="True"/>
+    <aura:attribute name="store" type="sObject" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:button variant="brand" label="Edit" onclick="{! c.Edit }" disabled="{!v.isEdit}"/>
+    <lightning:button variant="brand" label="Save" type="submit" onclick="{! c.Save }" disabled="{!v.save}"/>
+     <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:iteration items="{!v.mydata}" var="row">
+        <aura:iteration items="{!v.mycolumns}" var="field">
+                   
+            <c:LightningCell 
+                             mydata="{!row}" 
+                             field="{!field}" 
+                             edit="{!v.isEdit}" 
+                             obj ="{!v.ObjectName}"/>
+                        <!--<lightning:input label="{!field.label}" Value="{!row}"/>-->
+        </aura:iteration>
+    </aura:iteration>
+    
+    
+   
+   
+    
+</aura:component>

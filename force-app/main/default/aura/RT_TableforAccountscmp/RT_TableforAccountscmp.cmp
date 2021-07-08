@@ -1,0 +1,8 @@
+<aura:component controller = "FieldSetFormController" >
+    
+    <aura:attribute name = 'actobj' type = 'Account' default ="{'sobjectType':'Account','Name':'','AccountNumber':''}"/>
+        <aura:attribute name = 'actId' type ='String'/>
+    <lightning:input value ="{!v.actobj.Name}" label = "Account Name"/>
+    <lightning:input value ="{!v.actobj.AccountNumber}" label = "Account Number"/>
+    <lightning:button label="Save" onclick = "{!c.dosave}"/>
+</aura:component>

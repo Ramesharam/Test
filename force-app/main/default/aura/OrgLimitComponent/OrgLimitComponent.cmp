@@ -1,0 +1,37 @@
+<aura:component controller="OrgLimitController" implements="force:appHostable,flexipage:availableForAllPageTypes"
+    access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="options" type="List" default="[]" />
+    <aura:attribute name="records" type="List" default="[]" />
+    <aura:attribute type="String" name="title" default="All" />
+    <aura:attribute name="filterOptions" type="List" />
+    <!-- <aura:attribute name="OrgLimitNames" type="String"/> -->
+    <div class="slds-grid  slds-page-header border" >
+        <div class="slds-col slds-large-size_4-of-12 margin " >System Limits</div>
+        <div class="slds-col slds-large-size_8-of-12">
+                <lightning:combobox name="filtername"  label="Filter/Sort Records" value="Percentage_DESC" placeholder="Select option" options="{! v.filterOptions }" onchange="{! c.handleFilter }"/>
+            <!-- <lightning:combobox name="general" label="Many Options" value="{!v.options.label}"
+                placeholder="Select an Option" options="{! v.options }" onchange="{! c.handleChange }" /> -->
+        </div>
+    </div>
+    <!-- <div  style="border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;"> </div> -->
+    <div class="div">
+    <!-- {!(v.records.length /2)*176 >360 ? 360 : (v.records.length /2)*176} -->
+            
+        
+        <!--  onchange="{! c.handleChange }" -->
+        <aura:if isTrue="{!v.records.length>0}">
+            <br/>
+            <lightning:layout horizontalAlign="space" verticalAlign="center" multipleRows="true">
+                <aura:iteration items="{! v.records }" var="limitItem">
+                    <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="6" mediumDeviceSize="6"
+                        largeDeviceSize="6">
+                        <c:orgLimitChild limit="{!limitItem}"/><hr></hr>
+                    </lightning:layoutItem>
+                </aura:iteration>
+            </lightning:layout>
+        <aura:set attribute="else" ><span class="span">No Records For this range</span></aura:set>
+    </aura:if>
+    </div>
+</aura:component>

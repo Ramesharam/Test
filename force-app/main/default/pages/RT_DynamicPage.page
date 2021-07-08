@@ -1,0 +1,15 @@
+<apex:page standardController="Contact"  >
+    <apex:form >
+        <apex:pageBlock title="Dynamic" >
+            <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:repeat var="a" value="{!contact}">
+                    <apex:inputField value="{!a.firstname}"/>
+                    <apex:inputfield value="{!a.lastname}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

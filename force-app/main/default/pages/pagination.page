@@ -1,0 +1,164 @@
+<apex:page controller="pagination" standardStyleSheets="false" showHeader="false" cache="false" tabStyle="Account">
+    <style>
+        table{
+            width: 100%;
+            background-color: #f8f8f8;
+            border:1px solid #EAEAEA;
+            padding: 5px;
+        }
+        
+        tr{
+            text-align: left;
+            padding: 4px 2px;
+        }
+        
+        .first h3{
+            background-color: #0CA1CF;
+            padding: 5px 3px;
+        }
+        
+        .page_navigation{
+            font-family: tahoma;
+            font-size: 11px;
+            float: right;
+            
+        }
+        
+        .page_navigation a{
+            text-decoration: none;
+            padding: 3px 5px;
+            margin: 0 2px;
+            background-color: #28ADD9;
+            color: white;
+            display: block;
+            float: left;
+            text-align: center;
+        }
+        
+        .page_navigation .active_page{
+            background-color: white;
+            color: black;
+        }
+        
+        .demo2{
+            margin: 10px 5px;
+            background-color: #00064F;
+            overflow:auto;
+            text-align: center
+        }
+        
+        .title{
+            font-family: Georgia;
+            font-size: 36px;
+            font-style: italic;
+            color: white;
+            padding: 10px;
+        }
+        
+        .head{
+            font-family: Tahoma;
+            font-size:20px;
+            color: orange;
+            padding: 5px;
+            overflow: auto;
+        }
+        
+        .body {
+            background-color: #C6D9D2;
+            
+        }
+        
+        .content {
+            width: 90%;
+            margin: 0px auto;
+            overflow: auto;
+        }
+        
+        .item{
+            color: black;
+            font-family: Georgia;
+            font-size: 16px;
+            padding: 10px;
+            display: block;
+            
+        }
+        
+        .block{
+            display:block;
+        }
+        
+        .panel {
+            width: 40%;
+            float: left;
+            padding: 0 30px;
+            
+        }
+        
+        .demo2 .page_navigation a{
+            background-color: orange;
+            color: black;
+        }
+        
+        .demo2 .page_navigation .active_page{
+            background-color: transparent;
+            color: white;
+        }
+    </style>
+  
+    <apex:includeScript value="{!$Resource.Jquery}"/>   
+    <apex:includeScript value="{!$Resource.paginate}"/>
+    
+    <script type="text/javascript">
+        $.noConflict();
+        
+        jQuery(document).ready(function($){
+            $(esc(pbsId)).pajinate({
+                 item_container_id : esc(accountTableBodyId),
+                 items_per_page : 5,
+                 num_page_links_to_display : 1
+            });
+            
+            $('.demo2').pajinate();
+        }); 
+        
+        function esc(myid) {
+           return '#' + myid.replace(/(:|\.)/g,'\\\\$1');
+        }
+    
+     </script>
+<apex:form >
+          <apex:define name="content">    
+    	
+            <apex:pageBlock >
+                <apex:pageBlockSection title="Pagination Example" columns="1" id="pbs">
+                    <div class="page_navigation"></div>
+                    <script> 
+                    
+                        var accountTableId = '{!$Component.accountTable}'; 
+                        var accountTableBodyId = accountTableId + ':tb';
+                        
+                        var pbsId = '{!$Component.pbs}'; 
+                    
+                    </script>
+        
+                    <apex:pageBlockTable value="{!accounts}" var="account" id="accountTable" rows="1000">
+                        <apex:column >
+                            <apex:facet name="header">Id</apex:facet>
+                            <apex:outputField value="{!account.Id}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>
+                            <apex:outputField value="{!account.Name}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Type</apex:facet>
+                            <apex:outputField value="{!account.Type}"/>
+                        </apex:column>                
+                    </apex:pageBlockTable>                   
+                      
+                    <!--<div class="page_navigation"></div>-->
+                 </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:define>   
+    </apex:form>
+</apex:page>

@@ -1,0 +1,56 @@
+<aura:component controller="RT_HighlightsPanelCustom" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name='fieldValues' type="String"/>
+    <aura:attribute name='record' type='List'/>
+    <aura:attribute name="fieldList" type="List"/>
+    <aura:attribute name='sObjectName' type='String'/>
+    <aura:attribute name='actName' type='String'/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />	
+    <div class="slds-page-header slds-page-header_record-home">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span>{!v.sObjectName}</span>
+                                    <span class="slds-page-header__title slds-truncate">{!v.actName}</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__col-actions">
+                <div class="slds-page-header__controls">
+                    <div class="slds-page-header__control">
+                        <ul class="slds-button-group-list">
+                            <lightning:quickActionAPI aura:id="quickActionAPI" />
+                            <div>
+                                <lightning:buttonGroup>
+                                    <lightning:button onclick="{!c.editRecord}" label="Edit" />
+                                    <lightning:button label="Delete" />
+                                </lightning:buttonGroup>  
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="slds-page-header__row slds-page-header__row_gutters">
+            <div class="slds-page-header__col-details">
+                <ul class="slds-page-header__detail-row">
+                    <aura:iteration items="{!v.record}" var="rec">
+                        <aura:iteration items="{!v.fieldList}" var="flds" >
+                            <c:RT_HighlightPanelChaild fields="{!flds}" 
+                                                       record="{!rec}" 
+                                                       sObjectName="{!v.sObjectName}" 
+                                                       actName="{!v.actName}"/>         
+                        </aura:iteration>
+                        
+                    </aura:iteration>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,29 @@
+<aura:component controller="ObjectLimitBarChartController" implements="flexipage:availableForAllPageTypes" access="global">
+    
+    <!-- Attribute -->
+    
+    <aura:attribute name="sObjectName" type="Object" default=""/>
+    <aura:attribute name="filterList" type="List"/>
+    <aura:attribute name="appliedFilterList" type="List"/>
+    <aura:attribute name="dataMap" type="Map"/>
+    <aura:attribute name="viewType" type="String" default="bar"/>
+    <aura:attribute name="isOnloadFilterApplied" type="Boolean" default="false"/>
+    <aura:attribute name="isObjChange" type="Boolean" default="false"/>
+    <aura:attribute name="onloadObjectFilter" type="List" />
+    <aura:attribute name="sortedByLimitObjects" type="List"/>
+    <aura:attribute name="isGetUsage" type="Boolean" default="true"/>
+    
+    <!-- handler -->
+    <aura:handler name="change" value="{!v.onloadObjectFilter}" action="{!c.handleScriptLoad}" />
+    <aura:handler name="change" value="{!v.sObjectName}" action="{!c.handleScriptLoad}" />
+    <aura:handler name="change" value="{!v.appliedFilterList}" action="{!c.handleFilterChange}" />
+    <aura:handler name="change" value="{!v.viewType}" action="{!c.handleScriptLoad}" />
+    <!-- <aura:handler name="change" value="{!v.maxLimit}" action="{!c.handleMaxLimitChange}" /> -->
+    
+    <!-- Resource -->
+    <ltng:require scripts="{!$Resource.ChartJS}" afterScriptsLoaded="{!c.handleScriptLoad}"/>
+    
+    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--3-of-4">
+        <canvas aura:id="barChart" id="barChart" />
+    </div>
+</aura:component>

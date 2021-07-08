@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="fieldSetName" description="The api name of the field set to use from the given object." />
+	<design:attribute name="ObjectName"  description="object name." />
+</design:component>

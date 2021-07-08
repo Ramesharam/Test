@@ -1,0 +1,119 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   
+    <aura:attribute name="isCopyLink" type="boolean" default="false"/>
+    <aura:attribute name="isShareWithGroup" type="boolean" default="false"/>
+    <aura:attribute name="isShareWithFollowers" type="boolean" default="false"/>
+    <lightning:buttonMenu aura:id="menu" iconName="utility:share" label="Share" onselect="{! c.handleSelect }" alternativeText="Show menu">
+        <lightning:menuItem value="CopyLink" label="Copy Link" />
+        <lightning:menuItem value="ShareWithGroup" label="Share With Group" />
+        <lightning:menuItem value="ShareWithFollowers" label="Share With Followers"/>
+    </lightning:buttonMenu>
+    <aura:if isTrue="{!v.isCopyLink}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Copy Link To Thread</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:input type="url" name="input1" /> 
+                    <lightning:button variant="brand"
+                                      label="Copy"
+                                      title="Copy"
+                                      onclick="{!c.copyLink}"/>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.isShareWithGroup}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Share With Group</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:recordEditForm objectApiName="GroupMember">
+                        <lightning:inputField aura:id="grId" fieldName="GroupId" />
+                        <lightning:inputField aura:id="grId" fieldName="Id" />
+                        <lightning:inputField aura:id="grId" fieldName="UserOrGroupId" />
+                        <lightning:inputField aura:id="grId" fieldName="SystemModstamp " />
+                    </lightning:recordEditForm>
+                    <lightning:inputRichText variant="bottom-toolbar"  placeholder="Share an update..."/>
+                    <lightning:input aura:id="query-box" id="query-box" type="search" name="search" placeholder="additional search terms"/><!-- onchange="{!c.query}" value="{!v.searchInut}"/>
+                    
+                    
+                     DROPDOWN 
+                    
+                    <div id="listbox-suggestions" aura:id="query-suggest-box" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid slds-hide" role="listbox">
+                        <ul aura:id="query-suggest-list" class="slds-listbox slds-listbox_vertical" role="presentation" >
+                            <aura:iteration items="{!v.activeQuerySuggestions}" var="sugg" indexVar="index">
+                                <li aura:id="query-suggest-item" role="presentation" class="slds-listbox__item" >
+                                    <div aura:id="query-suggestions" id="{!sugg}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option" 
+                                         value="{!sugg}" onclick="{!c.handlesuggestionClick}">
+                                        {!sugg}
+                                    </div>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>--> 
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand"
+                                      label="Share"
+                                      title="Share"
+                                      onclick="{!c.shareAnswer}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.isShareWithFollowers}">
+        
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Share With Followers</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    To:My Followers
+                    <lightning:inputRichText variant="bottom-toolbar"  placeholder="Share an update..."/>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand"
+                                      label="Share"
+                                      title="Share"
+                                      onclick="{!c.shareAnswer}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

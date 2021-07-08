@@ -1,0 +1,31 @@
+<apex:page docType="html-5.0" standardController="Contact" >
+
+    <style>
+        #myForm{
+            align-content: center;
+        }
+    </style>
+        <apex:form id="myForm">
+            <apex:pageBlock >
+                    <apex:pageBlockSection title="Contact" columns="2">       
+                        <apex:inputField value="{!Contact.FirstName}" label="First name"/>
+                        <apex:inputField value="{!Contact.LastName}" required="true"/>  
+                        <apex:inputField value="{!Contact.Email}" required="true"/>
+                        <apex:inputField value="{!Contact.Phone}"/> 
+                        <apex:inputField value="{!Contact.Birthdate}" required="true"/>  
+                        
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Address" columns="2">
+                        <apex:inputTextarea value="{!Contact.mailingstreet}"/>
+                        <apex:inputField value="{!Contact.mailingcity}"/>
+                        <apex:inputField value="{!Contact.mailingstate}"/>
+                        <apex:inputField value="{!Contact.mailingpostalcode}"/>
+                        <apex:inputField value="{!Contact.mailingcountry}"/>
+
+                    </apex:pageBlockSection>    
+                        <apex:commandButton action="{!save}" value="Submit"> </apex:commandButton>
+
+            </apex:pageBlock>     
+        </apex:form>
+  
+</apex:page>

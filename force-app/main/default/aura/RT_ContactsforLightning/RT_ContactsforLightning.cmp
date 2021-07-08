@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable" controller = "FieldSetFormController">
+    
+    <aura:attribute name="contacts" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  
+        <table class="slds-table slds-table--bordered slds-table--striped" >
+            <thead>
+                <tr>
+                    <th scope="col"><span class="slds-truncate">Account</span></th>
+                    <th scope="col"><span class="slds-truncate">Name</span></th>
+                    <th scope="col"><span class="slds-truncate">Phone</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.contacts}" var="contact">
+                    <tr>  
+                        <td>{!contact.Account.Name}</td>  
+                        <td>{!contact.Name}</td>
+                        <td>{!contact.Phone}</td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+ 
+    <p>ContactList goes here</p>
+    
+</aura:component>

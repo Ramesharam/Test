@@ -1,0 +1,53 @@
+<aura:component controller = "LoginSearchQuestrade" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<!-- Data-->
+    <aura:attribute name="FAQ" Type="List"/>
+    <aura:attribute name="SearchResults" Type="Object[]"/>
+    <aura:attribute name="searchKeyword" Type ="String"/>
+    
+    <!-- handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- Body-->
+    <div class ="slds-card ">
+    	
+    	<div class="slds-grid slds-card">
+		  <div class="slds-col"><a href=" ">Contact Us</a></div>
+		  <div class="slds-col"><lightning:button variant="base" label="Close" title="Close" onclick="{! c.Close }"/></div>
+		</div> 	
+	    <div class="slds-card">
+  			<div class="slds-col--padded">
+  				<lightning:input name="SearchKey"  value="{!v.searchKeyword}" aura:id="search" placeholder="Type Something..." onchange ="{!c.SearchArticles}"/>
+  			</div>
+		</div>
+		<div class="slds-p-left_small slds-card slds-align">
+		    <div class="{! if(v.SearchResults.length != 0,' slds-show ',' slds-hide ')}">
+		         {!v.SearchResults.length} Search Results for {!v.searchKeyword}
+		    </div>
+		</div>
+	   
+	    <div class="slds-p-left_small slds-card slds-align">
+	    	
+	    	<aura:iteration items="{!v.SearchResults}" var="result">
+	    		<ul>
+	    			<li>
+	    				<a onclick = "{!c.expandArticle}" aura:id = "{!result.Id}" data-value ="{!result.key}">        {!result.value}
+	    				</a>
+	    			</li>
+	    		</ul>
+	    	</aura:iteration>
+	    </div>
+	    <div class="slds-p-left_small slds-page-header__col-title">
+	    	<div class=" slds-p-top_small slds-card slds-align">
+	              
+	                <span class=" slds-truncate" title="Frequently Asked Questions"><B>Frequently Asked Questions</B></span>
+	               
+	        </div>
+	    	<aura:iteration items="{!v.FAQ}" var="faq">
+	    		<ul>
+	    			<li>
+	    				<a onclick = "{!c.expandArticle}" aura:id = "{!faq.Id}" data-value ="{!faq.Id}"> {!faq.Title} </a>
+	    			</li>
+	    		</ul>
+	    	</aura:iteration>
+	    </div>
+	   </div>
+</aura:component>

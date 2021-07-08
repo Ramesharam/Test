@@ -1,0 +1,122 @@
+<aura:component controller="PopupFormC"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+    <aura:attribute name="mydata" type="List"/>
+    <aura:attribute name="actdata" type="List"/>
+
+    <aura:attribute name="accForm" type="Account" default="{'sobjectType' : 'Account'}"/>
+    <aura:attribute type="Account[]" name="records" />
+    <aura:attribute type="Boolean" name="sortAsc" />
+    <aura:attribute type="String" name="sortField" />
+     <aura:attribute name="PaginationList" type="Account"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name ="searchString" type="String" default=""/>
+    <aura:attribute name ="totalPages" type= "Integer"/> 
+    
+    <aura:handler event="force:refreshView" action="{!c.doinit}" />
+    <div class="slds-section  slds-theme_shade">
+        <div class="slds-m-around_small">
+            <div class="slds-page-header" role="banner">
+                <div>
+                    <lightning:button label="Custom_New"
+                                      variant="brand"
+                                      onclick="{!c.newPopup}"/>
+                    <lightning:button label="Standard_New"
+                                      variant="brand"
+                                      onclick="{!c.createRecord}"/>
+                </div>  
+                <br/>
+                <form class="slds-form--inline">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="search"></label>
+                        <div class="slds-form-element__control">
+                            <lightning:input type="text" name="input1" label="enter search key" value="{!v.searchString}" onkeyup="{!c.Search}"/>
+                            <!--<ui:inputText aura:id="searchId" class="slds-input" value="{v.searchString}" placeholder="Type here..."/>-->
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <button type="button" onclick="{!c.Search}" class="slds-button slds-button--brand">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        
+        
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox1" class="slds-modal slds-modal_large">
+            <div class="slds-modal__container" style="width: 65%;">
+                
+                
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">New Account</h3>
+                        </div> 
+                    </div>    
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Account Name" name="myname" value="{!v.accForm.Name}" required="True"/> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Account Number" name="mynumber" value="{!v.accForm.AccountNumber}"/> 
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Industry" name="myindustry" value="{!v.accForm.Industry}"/> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Phone" name="myphone" value="{!v.accForm.Phone}"/> 
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button label="Save" onclick="{!c.saveModal}" />
+                    <lightning:button label="Cancel" onclick="{!c.closeNewModal}" />
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="slds-section slds-is-open">
+            <h3 class="slds-section__title slds-theme_shade">
+                <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Accounts</span>
+            </h3>
+            <br/>
+            <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout" aura:id="accountTable">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th scope="col"><div class="slds-truncate" title="slno">Sl.No</div></th>
+                        <th scope="col"><div class="slds-truncate" title="Account Name"><a href="javascript:void(0)" onclick = '{!c.sortByName}'> Account Name</a></div></th>
+                        <th scope="col"><div class="slds-truncate" title="account Number"><a href="javascript:void(0)" onclick = '{!c.sortByNumber}'>Account Number</a></div></th>
+                        <th scope="col"><div class="slds-truncate" title="Industry"><a href="javascript:void(0)" onclick = '{!c.sortByIndustry}'>Industry</a></div></th>
+                        <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.mydata}" var="row" indexVar="index">
+                        <tr>
+                            <td>{!v.startPage + index + 1} </td>
+                            <td>{!row.Name}</td> 
+                            <td>{!row.AccountNumber}</td> 
+                            <td>{!row.Industry}</td>
+                            <td>{!row.Phone}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table><br/>
+         
+            <div class="slds-align_absolute-center">   
+                        
+                <lightning:button disabled ="{!v.startPage == 0}" variant="brand" iconName='utility:back' label="Previous" onclick="{!c.previous }" />          
+                <lightning:button disabled="{!v.endPage >= v.totalRecords}" iconName='utility:forward' iconPosition='right' variant="brand" label="Next" onclick="{!c.nextIndex }" />            
+               
+            </div>
+            <p class="slds-truncate">{!v.totalRecords} Accounts • page {} / {!v.totalPages}</p>
+            
+        </div>
+    </div>
+</aura:component>

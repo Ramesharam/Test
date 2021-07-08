@@ -1,0 +1,5 @@
+<apex:page controller="CustomObjectEmailExample">
+  <apex:form >
+    <apex:commandButton value="Send Email" action="{!sendingMail}"/>
+  </apex:form>
+</apex:page>

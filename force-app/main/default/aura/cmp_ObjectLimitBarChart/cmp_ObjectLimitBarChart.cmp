@@ -1,0 +1,142 @@
+<aura:component controller="ObjectLimitBarChartController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    
+    
+    <!-- Attributes -->
+    
+    <!-- list of all objects -->
+    <aura:attribute name="options" type="List"/>
+    <!-- Sort by Name data -->
+    <aura:attribute name="optionsOnSort" type="List"/>
+    <!-- Sort by Percent data -->
+    <aura:attribute name="optionsOnPerSort" type="List"/>
+    <!-- storing limit filters related selected Object  -->
+    <aura:attribute name="filterList" type="List"/>
+    <!-- Selected sObject Name -->
+    <aura:attribute name="sObjectName" type="String" default="All"/>
+    <!-- Storing filters which are checked  -->
+    <aura:attribute name="appliedFilterList" type="List"/>
+    <!-- Sort By Graph view -->
+    <aura:attribute name="graphTypes" type="List" />
+    <aura:attribute name="viewType" type="String" default="bar"/>
+    <!-- geting Object label from Selected ObjectAPIName from options attribute -->
+    <aura:attribute name="objectLabel" type="String" default="All"/>
+    <!-- Sort By Filters: -->
+    <aura:attribute name="sortFitersList" type="List" />
+    <aura:attribute name="sortNameType" type="String" default="Name"/>
+    <!-- Storing data for Sort by Percent Filetr -->
+    <aura:attribute name="sortedByLimitObjects" type="List"/>
+    <!-- Object API Name to Label Map -->
+    <aura:attribute name="objOptionsMap" type="Map"/>
+    <!-- Static Limit filters displaying onload -->
+    <aura:attribute name="onloadObjectFilter" type="List" />
+    <!-- applied filters stored based on true value -->
+    <aura:attribute name="isOnloadFilterApplied" type="Boolean" default="false"/>
+    <!-- true:get Percent Filetr data only onload and false:stop fetching data for other filters -->
+    <aura:attribute name="isGetUsage" type="Boolean" default="true"/>
+    
+    <!-- handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="change" value="{!v.sortNameType}" action="{!c.handleSortBy}" />
+    
+    <!-- Container -->
+    <div class="slds-grid slds-wrap" style="background-color: white;">
+        
+        <!-- Header for Filters-->
+        <div class="slds-grid slds-grow slds-size_12-of-12" >
+            <!-- Object Filter: -->
+            <div class="slds-grid slds-grid_vertical-align-left slds-grid_align-left slds-size_2-of-12" 
+                 style="margin-left: 2%;margin-top: 1%;">
+                <lightning:combobox name="progress" 
+                                    label="Select Object:"
+                                    value="{!v.sObjectName}" 
+                                    options="{!v.options}" 
+                                    placeholder="Choose Object" 
+                                    onchange="{!c.handleObjectChange}"/> 
+            </div>
+            <!-- Graph view: filter -->
+            <!-- <div class="slds-grid slds-grid_vertical-align-left slds-grid_align-left slds-size_2-of-12" 
+                 style="margin-left: 2%;margin-top: 1%;">
+                <lightning:combobox name="graphView" 
+                                    label="Select Graph View:"
+                                    value="{!v.viewType}" 
+                                    options="{!v.graphTypes}" /> 
+            </div> -->
+            <!-- Sort By: -->
+            <div class="slds-grid slds-grid_vertical-align-left slds-grid_align-left slds-size_2-of-12" style="margin-left: 2%;margin-top: 1%;">
+                <lightning:combobox name="sortbyName" 
+                                    label="Sort By"
+                                    value="{!v.sortNameType}" 
+                                    options="{!v.sortFitersList}"
+                                    disabled="{! or(v.sObjectName == '',v.sObjectName == 'All')? false:true}" /> 
+            </div>
+        </div>
+        
+        <!-- Body: Limit Filters -->
+        <div class="slds-p-left_large slds-col slds-size_3-of-12 slds-p-top_medium">
+            <span>
+                
+                <aura:iteration items="{!v.filterList}" var="item" indexVar="index">
+                    <lightning:input type="checkbox" 
+                                     aura:id="myCheck"
+                                     onchange="{!c.handleFilterChange}" 
+                                     label="{!item}" 
+                                     name="{!index}"
+                                     checked="true" />
+                    <br/> 
+                </aura:iteration>
+            </span>
+        </div>
+        
+        <!-- Body: Bar Graph -->
+        <div class="slds-col slds-p-top_medium slds-size_9-of-12">
+            <div class="slds-scrollable_y slds-wrap slds-grid " style="height: 397px;">
+                <aura:if isTrue="{! or(v.sObjectName == '',v.sObjectName == 'All')? 'true' : 'false' }">
+                    <aura:if isTrue="{!v.sortNameType == 'Percent'}">
+                        <!-- Sort By Percent: -->
+                        <aura:iteration items="{!v.optionsOnPerSort}" var="item" indexVar="index">
+                            <div class="{! (item.label != 'All')? ' slds-col slds-size_6-of-12 ' : 'slds-hide'}" >
+                                <c:cmp_BarchartFilters sObjectName = "{!item.label}"
+                                                       viewType="{!v.viewType}"
+                                                       filterList = "{!v.filterList}"
+                                                       onloadObjectFilter="{!v.onloadObjectFilter}"
+                                                       isOnloadFilterApplied="{!v.isOnloadFilterApplied}"
+                                                       isObjChange="false"
+                                                       sortedByLimitObjects="{!v.sortedByLimitObjects}"
+                                                       isGetUsage="{!v.isGetUsage}"/>
+                            </div>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <!-- Sort By Name: -->
+                            <aura:iteration items="{!v.optionsOnSort}" var="item" indexVar="index">
+                                <div class="{! (item.label != 'All')? ' slds-col slds-size_6-of-12 ' : 'slds-hide'}" >
+                                    <c:cmp_BarchartFilters sObjectName = "{!item.label}"
+                                                           viewType="{!v.viewType}"
+                                                           filterList = "{!v.filterList}"
+                                                           onloadObjectFilter="{!v.onloadObjectFilter}"
+                                                           isOnloadFilterApplied="{!v.isOnloadFilterApplied}"
+                                                           isObjChange="false"
+                                                           sortedByLimitObjects="{!v.sortedByLimitObjects}"
+                                                           isGetUsage="{!v.isGetUsage}"/>
+                                </div>
+                            </aura:iteration>
+                        </aura:set>
+                    </aura:if>
+                    
+                    <aura:set attribute="else">
+                        <!-- When Single object is Selected -->
+                        <c:cmp_BarchartFilters sObjectName = "{!v.objectLabel}"
+                                               filterList = "{!v.filterList}"
+                                               appliedFilterList="{!v.appliedFilterList}"
+                                               viewType="{!v.viewType}"
+                                               isOnloadFilterApplied="false"
+                                               isObjChange="true"/>
+                    </aura:set>
+
+                </aura:if>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,40 @@
+<aura:component controller="LightningDataTableController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    	<aura:attribute name="obj" type="sObject" description="object name." />
+    <aura:attribute name="mydata" type="Object" description="record which is being displayed"/>
+    <aura:attribute name="field" type="List" description="field object which is being rendered"/>
+    <aura:attribute name="cellValue" type="Object" default="[]"/>
+    <aura:attribute name="edit" type="boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds">
+                
+        <aura:if isTrue="{!v.field.type == 'picklist'}">
+            <aura:if isTrue="{!v.edit}">
+                <lightning:select label="{!v.field.label}" onchange="{!c.change}" onfocus="{!c.loadPicklist}">
+                <option text="{!v.cellValue}"></option>
+                    <option text="abcd"/>
+                </lightning:select>
+                <aura:set attribute="else">
+                     {!v.field.label}:<ui:outputText value="{!v.cellValue}"/>
+                </aura:set>
+            </aura:if>
+        </aura:if>
+        <aura:if isTrue="{!v.field.type == 'string' }">
+            <aura:if isTrue="{!v.edit}">
+                <lightning:input  label="{!v.field.label}" value="{!v.cellValue}" onblur="{!c.change}"/>
+                <aura:set attribute="else">
+                    {!v.field.label}:<ui:outputText value="{!v.cellValue}"/>
+                </aura:set>
+            </aura:if>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.field.type == 'datetime'}">
+            <aura:if isTrue="{!v.edit}">
+                <ui:inputDateTime  aura:id="expdate" label="{!v.field.label}" class="field" value="{!v.cellValue}" displayDatePicker="true" />           
+                <aura:set attribute="else">
+                    {!v.field.label}:<ui:outputDateTime value="{!v.cellValue}"/>
+                </aura:set>  
+            </aura:if>
+        </aura:if>
+    </div>
+</aura:component>

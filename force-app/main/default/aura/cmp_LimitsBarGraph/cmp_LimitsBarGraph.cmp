@@ -1,0 +1,72 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                access="global">
+    
+    <!-- Attributes -->
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="appliedFilterList" type="List"/>
+    <aura:attribute name="filterLabeltoUsageMap" type="Map"/>
+    <aura:attribute name="map" type="Map"/>
+    <aura:attribute name="childFilterList" type="Map"/>
+    
+    <!-- handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="change" value="{!v.appliedFilterList}" action="{!c.init}" />
+    
+    <div style="background-color:white;">
+        <div class='barcontainer'>
+          <div class='barcontainerheader'>
+                Object: {!v.sObjectName} Limits
+            </div>
+            
+            <lightning:layout multipleRows="true"> 
+                <aura:iteration items="{!v.childFilterList}" var="item" >
+                    <lightning:layoutItem padding="around-small" size="1"> 
+                        <div class="bar" style="{!'height:'+item.value+'%;font-size: 70%;'}">
+                            <span class="">{!item.value}%</span>
+                            <!-- <div class='barlabel'>
+                                    {!item.key}
+                                </div> -->
+                        </div>
+                    </lightning:layoutItem>
+                </aura:iteration>
+            </lightning:layout>
+            
+           <!-- <div class='bar' style='height:12%;font-size: 70%;'>
+                <span class="">12%</span>
+                <div class='barlabel'>
+                label
+                </div>
+            </div>
+            <div class='bar' style='height: 16%;font-size: 70%;'>
+                16%
+                 <div class='barlabel'>
+                label
+                </div>
+            </div>
+            <div class='bar' style='height: 22%;font-size: 70%;'>
+                22%
+                 <div class='barlabel'>
+                label
+                </div>
+            </div>
+            <div class='bar' style='height:30%;font-size: 70%;'>
+                30%
+                 <div class='barlabel'>
+				label </div>
+            </div>
+            <div class='bar' style='height:45%;font-size: 70%;'>
+                45%
+                 <div class='barlabel'>
+                label
+                </div> 
+            </div>
+            <div class='bar' style='height:80%;font-size: 70%;'>
+                80%
+                <div class='barlabel'>
+                label
+                </div> 
+            </div> -->
+        </div>
+    </div> 
+    
+</aura:component>
