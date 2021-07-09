@@ -17,6 +17,9 @@
         var navService = component.find("navService");
         var pageReference = component.get("v.pageReference");
         console.log('test');
+        console.log('test');
+        console.log('test');
+        console.log('test');
         event.preventDefault();
         navService.navigate(pageReference);
     }
