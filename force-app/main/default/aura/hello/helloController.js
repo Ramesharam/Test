@@ -16,7 +16,6 @@
      handleClick: function(component, event, helper) {
         var navService = component.find("navService");
         var pageReference = component.get("v.pageReference");
-        console.log('test');
         event.preventDefault();
         navService.navigate(pageReference);
     }
